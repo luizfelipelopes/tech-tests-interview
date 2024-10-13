@@ -47,8 +47,8 @@
 	    
 	  }
 
-    echo solution('011100') . "\n";	
-    echo solution('111') . "\n";	
-    echo solution('1111010101111') . "\n";	
+    echo solution('011100') . "\n"; // returns 28	
+    echo solution('111') . "\n"; // returns 7
+    echo solution('1111010101111') . "\n"; // returns 22	
 	
 ?>

@@ -27,41 +27,49 @@
   //   curl_close($ch);
 	
 	
-	$data = json_encode(["data" => "key=IAfpK, age=58, key=VNVdi, age=64, key=jp9zt, age=58"]);
-	$response = json_decode($data, true);
-	$responseArr = explode(', ', $response['data']);
-	
-  $arrAge = [];
-  
-  foreach($responseArr as $value) {
-    if(strpos($value, 'age=') === false) {
-      continue;
-    }
-    
-    $age = substr_replace($value, '',  0, 4);
-    
-    if(!isset($arrAge[$age])) {
-      $arrAge[$age] = 1; 
-    } else {
-      $arrAge[$age]++;
-    }
-  }
-  
-  ksort($arrAge);
-  
-	$result = [];
-	
-	foreach($arrAge as $key => $value) {
-	  $result[] = ['age' => $key,  'count' => $value];
+$data = '{"data": "key=IAfpk, age=64, key=WNVdi, age=58, key=jp9zt, age=58"}';
+$input = json_decode($data);
+
+// explode data array
+// verify age elements and storage in hash key(age)/value(count o of ocurrences)
+// set valus ahshMap in a new array
+// convert to json format
+
+$dataArr = explode(', ', $input->data);
+$hashNumbers = [];
+
+
+// Time complexity: O(n) + O(u log u) = O(n + u log u)
+// Sapce complexity: O(n)
+
+// O(n)
+foreach($dataArr as $dataInput) {
+
+	if(strpos($dataInput, 'age=') === false) {
+		continue;
 	}
+
+	$num = substr($dataInput, 4);
 	
-	print_r(json_encode($result));
-	
-	
-	
-	
-	
-	
-	
+	if(!isset($hashNumbers[$num])) {
+		$hashNumbers[$num] = 1;
+	} else {
+		$hashNumbers[$num]++;
+	}
+}
+
+// O(u log u)
+ksort($hashNumbers);
+
+$output = [];
+
+// O(u)
+foreach($hashNumbers as $key => $value) {
+	$output[] = ['age' => $key, 'count' => $value];
+}
+
+$output = json_encode($output);
+
+print_r($output);
 	
 ?>

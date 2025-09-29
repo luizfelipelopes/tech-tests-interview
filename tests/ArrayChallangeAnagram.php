@@ -21,6 +21,8 @@ Output: 1
 
 */
 
+// Time complexity: O(n * m)
+// Space complexity: O(n * m)
 
 // $input = 'aa aa odg dog gdo';
 $input = 'a c b c run urn urn';

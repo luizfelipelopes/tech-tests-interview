@@ -1,93 +1,88 @@
 <?php
-
-
 /**
-Encode and Decode Strings
+	Encode and Decode Strings
 
-Design an algorithm to encode a list of strings to a single string. The encoded string is then decoded back to the original list of strings.
+	Design an algorithm to encode a list of strings to a single string. The encoded string is then decoded back to the original list of strings.
 
-Please implement encode and decode
+	Please implement encode and decode
 
-Example 1:
+	Example 1:
 
-Input: ["neet","code","love","you"]
+	Input: ["neet","code","love","you"]
 
-Output:["neet","code","love","you"]
+	Output:["neet","code","love","you"]
+	
+	Example 2:
 
-Example 2:
+	Input: ["we","say",":","yes"]
 
-Input: ["we","say",":","yes"]
+	Output: ["we","say",":","yes"]
+	
+	Constraints:
 
-Output: ["we","say",":","yes"]
-
-Constraints:
-
-0 <= strs.length < 100
-0 <= strs[i].length < 200
-strs[i] contains only UTF-8 characters.
-
+	0 <= strs.length < 100
+	0 <= strs[i].length < 200
+	strs[i] contains only UTF-8 characters.
 */
+
+// identifier to glue my array to a string
+// when need decodeI use this identifier
+// ["neet","code","love","you"] = 4#neet4#code4#love3#you
+
 
 
 class Solution {
 
-	public function encode(array $strs) {
-		
-		$encoded = '';
-		for($i = 0; $i < count($strs); $i++) {
-			$lenWord = strlen($strs[$i]);
-			$encoded .= "{$lenWord}#{$strs[$i]}";
+	// Time Complexity: O(n)
+	// Space Complexity: O(n)
+	public function encode(array $strs)
+	{
+
+		$encode = '';
+		foreach($strs as $str) {
+
+			$len = strlen($str);
+			$encode .= "{$len}#{$str}";
 		}
-		
-		return $encoded;
+
+		return $encode;
 	}
 
+	// Time Complexity: O(n)
+	// Space Complexity: O(n)
+	public function decode(string $strs)
+	{
+		$i = 0;
+		$arr = [];
 
-	public function decode(string $str) {
-		
-		$words = [];
-		$word = '';
+		while($i < strlen($strs)) {
 
-		$i = $j = 0;
+			$num = '';
 
-		while($i < strlen($str)) {
-
-			$length = '';
-			$i = $j;
-			$word = '';
-
-			while(isset($str[$j]) && $str[$j] != '#') {
-				$length .= $str[$j];
-				$j++;
+			while($strs[$i] != '#') {
+				$num .= $strs[$i];
+				$i++;
 			}
 
-			$j++;
-			$maxLength = $j + intVal($length);
-			
-			while($j < $maxLength) {
-				$word .= $str[$j];
-				$j++;
-			}
-			
-			if(!empty($word)) {
-				$words[] = $word;
-			}
-
-			$i++;
+			$arr[] = substr($strs, $i+1, intVal($num));
+			$i += intVal($num)+1;				
 
 		}
 
-		return $words;
+		return $arr;
 
 	}
+
 
 }
 
+
 $solution = new Solution();
-$enconded = $solution->encode(["neet","code","lo##ve","you"]);
-// $enconded = $solution->encode(["we","say",":","yes"]);
+$encode = $solution->encode(["we","say",":","y3#es"]);
+// $encode = $solution->encode(["neet","code","love","you"]);
+echo $encode . "\n";
+print_r($solution->decode($encode));
 
 
-echo $enconded . "\n";
-print_r(json_encode($solution->decode($enconded)));
+
 
